@@ -1,0 +1,3 @@
+[submodule "gist/auth_request.conf"]
+	path = gist/auth-request-conf
+	url = git@gist.github.com:2b3e87a9fca3034c58ab61a43412a685.git
