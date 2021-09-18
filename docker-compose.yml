@@ -1,0 +1,7 @@
+version: "3"
+services:
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    image: ghcr.io/bryant-finney/nginx-oauth/nginx:${BRANCH_TAG:-scratch}

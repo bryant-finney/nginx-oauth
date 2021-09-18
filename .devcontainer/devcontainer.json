@@ -1,0 +1,62 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.195.0/containers/docker-in-docker
+{
+	"name": "NGINX OAuth DnD",
+	"dockerFile": "Dockerfile",
+	"runArgs": ["--init", "--privileged"],
+	"mounts": ["source=dind-var-lib-docker,target=/var/lib/docker,type=volume"],
+	"overrideCommand": false,
+
+	// Set *default* container specific settings.json values on container create.
+	"settings": {},
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"ms-azuretools.vscode-docker",
+		"formulahendry.docker-extension-pack",
+		"mikestead.dotenv",
+		"github.vscode-pull-request-github",
+		"bierner.markdown-mermaid",
+		"searking.preview-vscode",
+		"p1c2u.docker-compose",
+		"formulahendry.docker-explorer",
+		"henriiik.docker-linter",
+		"perkovec.emoji",
+		"tamasfe.even-better-toml",
+		"mhutchie.git-graph",
+		"donjayamanne.githistory",
+		"eamodio.gitlens",
+		"tht13.html-preview-vscode",
+		"nickdemayo.vscode-json-editor",
+		"tyriar.lorem-ipsum",
+		"yzhang.markdown-all-in-one",
+		"ahmadalli.vscode-nginx-conf",
+		"raynigon.nginx-formatter",
+		"hangxingliu.vscode-nginx-conf-hint",
+		"ryu1kn.partial-diff",
+		"christian-kohler.path-intellisense",
+		"hoovercj.vscode-power-mode",
+		"esbenp.prettier-vscode",
+		"mutantdino.resourcemonitor",
+		"foxundermoon.shell-format",
+		"timonwong.shellcheck",
+		"yatki.vscode-surround",
+		"dengsir.template-generator-vscode",
+		"visualstudioexptteam.vscodeintellicode",
+		"redhat.vscode-yaml"
+	],
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "docker --version",
+
+	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "vscode",
+	"build": {
+		"args": {
+			"UPGRADE_PACKAGES": "true",
+			"USE_MOBY": "true"
+		}
+	}
+}
