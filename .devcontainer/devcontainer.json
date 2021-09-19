@@ -2,12 +2,16 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.195.0/containers/docker-in-docker
 {
   "name": "NGINX OAuth DnD",
-  "dockerFile": "Dockerfile",
-  "runArgs": ["--init", "--privileged"],
-  "overrideCommand": false,
 
-  // Set *default* container specific settings.json values on container create.
-  "settings": {},
+  "build": {
+    "args": {
+      "UPGRADE_PACKAGES": "true",
+      "USE_MOBY": "true"
+    }
+  },
+
+  "dockerFile": "Dockerfile",
+
   // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
     "ms-azuretools.vscode-docker",
@@ -45,7 +49,8 @@
   ],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  // "forwardPorts": [],
+  "forwardPorts": [8080, 8443],
+
   "mounts": [
     "src=${localEnv:HOME}/.credentials,dst=/home/vscode/.credentials,type=bind,readonly",
     "src=${localEnv:HOME}/.p10k.zsh,dst=/home/vscode/.p10k.zsh,type=bind,readonly",
@@ -59,15 +64,15 @@
     "src=dind-var-lib-docker,dst=/var/lib/docker,type=volume"
   ],
 
+  "overrideCommand": false,
+
   // Use 'postCreateCommand' to run commands after the container is created.
   "postCreateCommand": "chmod +x .devcontainer/post-create-command.sh && . ./.devcontainer/post-create-command.sh",
 
   // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
   "remoteUser": "vscode",
-  "build": {
-    "args": {
-      "UPGRADE_PACKAGES": "true",
-      "USE_MOBY": "true"
-    }
-  }
+
+  "runArgs": ["--init", "--privileged"],
+  // Set *default* container specific settings.json values on container create.
+  "settings": {}
 }

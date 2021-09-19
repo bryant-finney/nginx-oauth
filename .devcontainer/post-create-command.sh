@@ -5,3 +5,8 @@
 test -f "$HOME/.zshrc" && echo 'eval "$(direnv hook zsh)"' >>"$HOME/.zshrc"
 test -f "$HOME/.bashrc" && echo 'eval "$(direnv hook bash)"' >>"$HOME/.bashrc"
 direnv allow
+
+# shellcheck source=../.envrc
+. ./.envrc
+
+docker-compose up --build -d
