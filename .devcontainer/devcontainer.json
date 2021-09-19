@@ -48,8 +48,14 @@
   // "forwardPorts": [],
   "mounts": [
     "source=dind-var-lib-docker,target=/var/lib/docker,type=volume",
+    "src=${localEnv:HOME}/.p10k.zsh,dst=/home/vscode/.p10k.zsh,type=bind,readonly",
+    "src=${localEnv:HOME}/.ssh,dst=/home/vscode/.ssh,type=bind,readonly",
+    "src=${localEnv:HOME}/.vim,dst=/home/vscode/.vim,type=bind,readonly",
     "src=${localEnv:HOME}/.vscode/templates,dst=/home/vscode/.vscode/templates,type=bind",
-    "src=${localEnv:HOME}/.ssh,dst=/home/vscode/.ssh,type=bind,readonly"
+    "src=${localEnv:HOME}/.zprofile,dst=/home/vscode/.zprofile,type=bind,readonly",
+    "src=${localEnv:HOME}/.zsh_aliases,dst=/home/vscode/.zsh_aliases,type=bind",
+    "src=${localEnv:HOME}/.zshrc,dst=/home/vscode/.zshrc,type=bind,readonly",
+    "src=${localEnv:HOME}/powerlevel10k,dst=/home/vscode/powerlevel10k,type=bind,readonly"
   ],
 
   // Use 'postCreateCommand' to run commands after the container is created.
