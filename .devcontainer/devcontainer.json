@@ -45,7 +45,9 @@
     "yatki.vscode-surround",
     "dengsir.template-generator-vscode",
     "visualstudioexptteam.vscodeintellicode",
-    "redhat.vscode-yaml"
+    "redhat.vscode-yaml",
+    "cssho.vscode-svgviewer",
+    "jock.svg"
   ],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
