@@ -57,7 +57,7 @@ jobs:
           echo "VERSION=$VERSION" >>$GITHUB_ENV
           echo "BRANCH_TAG=$VERSION" >>$GITHUB_ENV
 
-      - name: build image 🛠
+      - name: build images 🛠
         run: |
           docker-compose build
 
@@ -66,5 +66,5 @@ jobs:
           echo "${{ secrets.GITHUB_TOKEN }}" |
             docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: publish image 🚀
+      - name: publish images 🚀
         run: docker-compose push

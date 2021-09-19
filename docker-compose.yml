@@ -3,6 +3,12 @@ services:
   nginx:
     build: ./nginx
     image: ghcr.io/bryant-finney/nginx-oauth/nginx:${BRANCH_TAG:-scratch}
+    ports:
+      - "8080:80"
+      - "8443:443"
+    volumes:
+      - ./nginx/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/etc/nginx/conf.d:/etc/nginx/conf.d
 
   echo:
     build: ./echo
