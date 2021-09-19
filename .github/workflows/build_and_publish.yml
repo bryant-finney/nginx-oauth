@@ -55,13 +55,11 @@ jobs:
             VERSION="$(echo "$VERSION_BASE" | sed -e 's/[^a-z0-9-]/-/g')"
 
           echo "VERSION=$VERSION" >>$GITHUB_ENV
+          echo "BRANCH_TAG=$VERSION" >>$GITHUB_ENV
 
       - name: build image 🛠
         run: |
-          docker build ./nginx \
-            --file ./nginx/Dockerfile \
-            --tag $IMAGE_ID:$VERSION \
-            --label "runnumber=${{ github.run_id }}"
+          docker compose build
 
       - name: login to registry 🔓
         run: |
@@ -69,4 +67,4 @@ jobs:
             docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: publish image 🚀
-        run: docker push $IMAGE_ID:$VERSION
+        run: docker compose push
