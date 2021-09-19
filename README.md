@@ -1,6 +1,6 @@
 # NGINX OAuth
 
-[![Open in Visual Studio Code](.devcontainer/open-in-vscode.svg)](vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=git@github.com:bryant-finney/nginx-oauth.git) [(link)](vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=git@github.com:bryant-finney/nginx-oauth.git)
+[![Open in Visual Studio Code](.devcontainer/open-in-vscode.svg)](https://open.vscode.dev/bryant-finney/nginx-oauth) [(link)](vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=git@github.com:bryant-finney/nginx-oauth.git)
 
 [![Open in Visual Studio Code - Insiders](.devcontainer/open-in-vscode-insiders.svg)](vscode-insiders://ms-vscode-remote.remote-containers/cloneInVolume?url=git@github.com:bryant-finney/nginx-oauth.git) [(link)](vscode-insiders://ms-vscode-remote.remote-containers/cloneInVolume?url=git@github.com:bryant-finney/nginx-oauth.git)
 
