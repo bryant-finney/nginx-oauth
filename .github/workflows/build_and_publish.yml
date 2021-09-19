@@ -7,7 +7,7 @@ on:
       - main
       - seed
 
-    # Publish `v1.2.3` tags as releases.
+    # Publish tags as releases.
     tags:
       - "*"
 
@@ -28,6 +28,34 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: prepare env ♻️
+        run: |
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+
+          # change all uppercase to lowercase
+          echo "IMAGE_ID=$(echo $IMAGE_ID | tr '[:upper:]' '[:lower:]')" >>$GITHUB_ENV
+
+          if [ -n "${{ github.head_ref }}" ]; then
+            # for PR workflows:
+            VERSION_BASE=${{ github.head_ref }}
+          else
+            # for other workflow triggers
+            VERSION_BASE="$(echo "${{ github.ref }}" | sed 's#refs/[a-z]*/##g')"
+          fi
+
+          # strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION="$(echo $VERSION_BASE | sed -e 's/^v//')"
+
+          # use docker `latest` tag convention
+          [ "$VERSION_BASE" == "main" ] && VERSION=latest
+
+          # ensure version tag is docker-compatible
+          test -z "$VERSION" && VERSION="$(echo "$VERSION_BASE" | sed -e 's/[^a-z0-9-]/-/g')"
+
+          echo "VERSION=$VERSION" >>$GITHUB_ENV
+
+          cat $GITHUB_ENV
+
       - name: build image 🛠
         run: docker build ./nginx --file ./nginx/Dockerfile --tag $IMAGE_NAME --label "runnumber=${{ github.run_id }}"
 
@@ -36,22 +64,6 @@ jobs:
 
       - name: publish image 🚀
         run: |
-          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
-
-          # Change all uppercase to lowercase
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[:upper:]' '[:lower:]')
-
-          echo "github ref: ${{ github.ref }}"
-
-          # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed 's#refs/[a-z]*/##g' | sed -e 's#.*/\(.*\)#\1#')
-
-          # Strip "v" prefix from tag name
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-
-          # Use Docker `latest` tag convention
-          [ "$VERSION" == "main" ] && VERSION=latest
-
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
 
