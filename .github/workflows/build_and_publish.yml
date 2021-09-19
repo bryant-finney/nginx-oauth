@@ -59,7 +59,7 @@ jobs:
 
       - name: build image 🛠
         run: |
-          docker compose build
+          docker-compose build
 
       - name: login to registry 🔓
         run: |
@@ -67,4 +67,4 @@ jobs:
             docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: publish image 🚀
-        run: docker compose push
+        run: docker-compose push
