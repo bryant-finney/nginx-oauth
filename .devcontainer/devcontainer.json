@@ -47,7 +47,7 @@
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
   "mounts": [
-    "source=dind-var-lib-docker,target=/var/lib/docker,type=volume",
+    "src=${localEnv:HOME}/.credentials,dst=/home/vscode/.credentials,type=bind,readonly",
     "src=${localEnv:HOME}/.p10k.zsh,dst=/home/vscode/.p10k.zsh,type=bind,readonly",
     "src=${localEnv:HOME}/.ssh,dst=/home/vscode/.ssh,type=bind,readonly",
     "src=${localEnv:HOME}/.vim,dst=/home/vscode/.vim,type=bind,readonly",
@@ -55,7 +55,8 @@
     "src=${localEnv:HOME}/.zprofile,dst=/home/vscode/.zprofile,type=bind,readonly",
     "src=${localEnv:HOME}/.zsh_aliases,dst=/home/vscode/.zsh_aliases,type=bind",
     "src=${localEnv:HOME}/.zshrc,dst=/home/vscode/.zshrc,type=bind,readonly",
-    "src=${localEnv:HOME}/powerlevel10k,dst=/home/vscode/powerlevel10k,type=bind,readonly"
+    "src=${localEnv:HOME}/powerlevel10k,dst=/home/vscode/powerlevel10k,type=bind,readonly",
+    "src=dind-var-lib-docker,dst=/var/lib/docker,type=volume"
   ],
 
   // Use 'postCreateCommand' to run commands after the container is created.

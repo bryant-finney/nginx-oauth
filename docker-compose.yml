@@ -8,3 +8,8 @@ services:
     build: ./echo
     image: ghcr.io/bryant-finney/nginx-oauth/echo:${BRANCH_TAG:-scratch}
     ports: ["8080"]
+
+  auth:
+    build: ./auth
+    image: ghcr.io/bryant-finney/nginx-oauth/auth:${BRANCH_TAG:-scratch}
+    ports: ["8080"]
