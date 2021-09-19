@@ -1,3 +1,6 @@
 [submodule "gist/auth_request.conf"]
 	path = gist/auth-request-conf
 	url = git@gist.github.com:2b3e87a9fca3034c58ab61a43412a685.git
+[submodule "gist/nginx-dockerfile"]
+	path = gist/nginx-dockerfile
+	url = git@gist.github.com:da6edc3e00ca4b7666eb06eb5cf60c34.git
