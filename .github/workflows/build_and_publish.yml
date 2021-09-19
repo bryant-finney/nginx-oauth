@@ -1,4 +1,4 @@
-name: 🛠, 🔓, and 🚀
+name: ♻️, 🛠, 🔓, and 🚀
 
 on:
   push:
@@ -18,7 +18,7 @@ env:
   IMAGE_NAME: nginx-oauth/nginx
 
 jobs:
-  # Push image to GitHub Packages.
+  # push image to GitHub Packages.
   push:
     runs-on: ubuntu-latest
     permissions:
@@ -44,28 +44,29 @@ jobs:
           fi
 
           # strip "v" prefix from tag name
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION="$(echo $VERSION_BASE | sed -e 's/^v//')"
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] &&
+            VERSION="$(echo $VERSION_BASE | sed -e 's/^v//')"
 
           # use docker `latest` tag convention
           [ "$VERSION_BASE" == "main" ] && VERSION=latest
 
           # ensure version tag is docker-compatible
-          test -z "$VERSION" && VERSION="$(echo "$VERSION_BASE" | sed -e 's/[^a-z0-9-]/-/g')"
+          test -z "$VERSION" &&
+            VERSION="$(echo "$VERSION_BASE" | sed -e 's/[^a-z0-9-]/-/g')"
 
           echo "VERSION=$VERSION" >>$GITHUB_ENV
 
-          cat $GITHUB_ENV
-
       - name: build image 🛠
-        run: docker build ./nginx --file ./nginx/Dockerfile --tag $IMAGE_NAME --label "runnumber=${{ github.run_id }}"
+        run: |
+          docker build ./nginx \
+            --file ./nginx/Dockerfile \
+            --tag $IMAGE_ID:$VERSION \
+            --label "runnumber=${{ github.run_id }}"
 
       - name: login to registry 🔓
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" |
+            docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: publish image 🚀
-        run: |
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
-
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+        run: docker push $IMAGE_ID:$VERSION
