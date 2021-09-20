@@ -1,5 +1,7 @@
 FROM nginx:stable-alpine AS base
 
+RUN apk update && apk add nginx-mod-http-js
+
 COPY --chown=root:root ./etc /etc
 COPY --chown=root:root ./usr /usr
 

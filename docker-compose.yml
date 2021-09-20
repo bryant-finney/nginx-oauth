@@ -2,9 +2,12 @@ version: "3"
 services:
   auth:
     build: ./auth
+    environment:
+      JSON_CONFIG_PATH: /etc/oauth2_config.json
     hostname: host.docker.internal
     image: ghcr.io/bryant-finney/nginx-oauth/auth:${BRANCH_TAG:-scratch}
     ports: ["8080"]
+    volumes: [./auth/oauth2_config.json:/etc/oauth2_config.json]
 
   echo:
     build: ./echo
