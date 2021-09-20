@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome to nginx!</title>
+    <link href="/static/fontawesome-all.min.css" rel="stylesheet" />
+    <style>
+      body {
+        width: 50em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+      }
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td,
+      th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to NGINX!</h1>
+
+    <p>The following table describes some of the pages in this site.</p>
+
+    <table>
+      <tr>
+        <th>Link</th>
+        <th>Summary</th>
+      </tr>
+      <tr>
+        <td><a href="/echo">/echo</a></td>
+        <td>An echo server is proxied here</td>
+      </tr>
+      <tr>
+        <td><a href="/o">/o</a></td>
+        <td>
+          A
+          <a
+            href="https://github.com/https://github.com/navikt/mock-oauth2-server"
+          >
+            navikt/mock-oauth2-server
+            <i class="fab fa-github"></i>
+          </a>
+
+          instance to act as a dummy IDP
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="/o/.well-known/openid-configuration">
+            /o/.well-known/openid-configuration
+          </a>
+        </td>
+        <td>The OpenID configuration is provided as JSON here</td>
+      </tr>
+      <tr>
+        <td><a href="/o/authorize">/o/authorize</a></td>
+        <td>The OpenID configuration is provided as JSON here</td>
+      </tr>
+    </table>
+  </body>
+</html>

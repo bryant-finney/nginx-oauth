@@ -1,0 +1,70 @@
+name: ♻️, 🛠, 🔓, and 🚀
+
+on:
+  push:
+    # Publish `main` as Docker `latest` image.
+    branches:
+      - main
+      - seed
+
+    # Publish tags as releases.
+    tags:
+      - "*"
+
+  # Run tests for any PRs.
+  pull_request:
+
+env:
+  IMAGE_NAME: nginx-oauth/nginx
+
+jobs:
+  # push image to GitHub Packages.
+  push:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: prepare env ♻️
+        run: |
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+
+          # change all uppercase to lowercase
+          echo "IMAGE_ID=$(echo $IMAGE_ID | tr '[:upper:]' '[:lower:]')" >>$GITHUB_ENV
+
+          if [ -n "${{ github.head_ref }}" ]; then
+            # for PR workflows:
+            VERSION_BASE=${{ github.head_ref }}
+          else
+            # for other workflow triggers
+            VERSION_BASE="$(echo "${{ github.ref }}" | sed 's#refs/[a-z]*/##g')"
+          fi
+
+          # strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] &&
+            VERSION="$(echo $VERSION_BASE | sed -e 's/^v//')"
+
+          # use docker `latest` tag convention
+          [ "$VERSION_BASE" == "main" ] && VERSION=latest
+
+          # ensure version tag is docker-compatible
+          test -z "$VERSION" &&
+            VERSION="$(echo "$VERSION_BASE" | sed -e 's/[^a-z0-9-]/-/g')"
+
+          echo "VERSION=$VERSION" >>$GITHUB_ENV
+          echo "BRANCH_TAG=$VERSION" >>$GITHUB_ENV
+
+      - name: build images 🛠
+        run: |
+          docker-compose build
+
+      - name: log into registry 🔓
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" |
+            docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: publish images 🚀
+        run: docker-compose push

@@ -1,0 +1,28 @@
+{
+  "interactiveLogin": true,
+  "httpServer": "MockWebServerWrapper",
+  "tokenCallbacks": [
+    {
+      "issuerId": "o",
+      "tokenExpiry": 120,
+      "requestMappings": [
+        {
+          "requestParam": "scope",
+          "match": "test_env",
+          "claims": {
+            "sub": "subByScope",
+            "aud": ["audByScope"]
+          }
+        },
+        {
+          "requestParam": "grant_type",
+          "match": "authorization_code",
+          "claims": {
+            "sub": "subByScope",
+            "aud": ["audByScope"]
+          }
+        }
+      ]
+    }
+  ]
+}

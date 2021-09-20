@@ -1,0 +1,80 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.195.0/containers/docker-in-docker
+{
+  "name": "NGINX OAuth DnD",
+
+  "build": {
+    "args": {
+      "UPGRADE_PACKAGES": "true",
+      "USE_MOBY": "true"
+    }
+  },
+
+  "dockerFile": "Dockerfile",
+
+  // Add the IDs of extensions you want installed when the container is created.
+  "extensions": [
+    "ms-azuretools.vscode-docker",
+    "formulahendry.docker-extension-pack",
+    "mikestead.dotenv",
+    "github.vscode-pull-request-github",
+    "bierner.markdown-mermaid",
+    "searking.preview-vscode",
+    "p1c2u.docker-compose",
+    "formulahendry.docker-explorer",
+    "henriiik.docker-linter",
+    "perkovec.emoji",
+    "tamasfe.even-better-toml",
+    "mhutchie.git-graph",
+    "donjayamanne.githistory",
+    "eamodio.gitlens",
+    "tht13.html-preview-vscode",
+    "nickdemayo.vscode-json-editor",
+    "tyriar.lorem-ipsum",
+    "yzhang.markdown-all-in-one",
+    "ahmadalli.vscode-nginx-conf",
+    "raynigon.nginx-formatter",
+    "hangxingliu.vscode-nginx-conf-hint",
+    "ryu1kn.partial-diff",
+    "christian-kohler.path-intellisense",
+    "hoovercj.vscode-power-mode",
+    "esbenp.prettier-vscode",
+    "mutantdino.resourcemonitor",
+    "foxundermoon.shell-format",
+    "timonwong.shellcheck",
+    "yatki.vscode-surround",
+    "dengsir.template-generator-vscode",
+    "visualstudioexptteam.vscodeintellicode",
+    "redhat.vscode-yaml",
+    "cssho.vscode-svgviewer",
+    "jock.svg"
+  ],
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  "forwardPorts": [8080, 8443],
+
+  "mounts": [
+    "src=${localEnv:HOME}/.credentials,dst=/home/vscode/.credentials,type=bind,readonly",
+    "src=${localEnv:HOME}/.p10k.zsh,dst=/home/vscode/.p10k.zsh,type=bind,readonly",
+    "src=${localEnv:HOME}/.ssh,dst=/home/vscode/.ssh,type=bind,readonly",
+    "src=${localEnv:HOME}/.vim,dst=/home/vscode/.vim,type=bind,readonly",
+    "src=${localEnv:HOME}/.vscode/templates,dst=/home/vscode/.vscode/templates,type=bind",
+    "src=${localEnv:HOME}/.zprofile,dst=/home/vscode/.zprofile,type=bind,readonly",
+    "src=${localEnv:HOME}/.zsh_aliases,dst=/home/vscode/.zsh_aliases,type=bind",
+    "src=${localEnv:HOME}/.zshrc,dst=/home/vscode/.zshrc,type=bind,readonly",
+    "src=${localEnv:HOME}/powerlevel10k,dst=/home/vscode/powerlevel10k,type=bind,readonly",
+    "src=dind-var-lib-docker,dst=/var/lib/docker,type=volume"
+  ],
+
+  "overrideCommand": false,
+
+  // Use 'postCreateCommand' to run commands after the container is created.
+  "postCreateCommand": "chmod +x .devcontainer/post-create-command.sh && . ./.devcontainer/post-create-command.sh",
+
+  // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+  "remoteUser": "vscode",
+
+  "runArgs": ["--init", "--privileged"],
+  // Set *default* container specific settings.json values on container create.
+  "settings": {}
+}

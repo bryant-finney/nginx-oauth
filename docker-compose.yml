@@ -1,0 +1,27 @@
+version: "3"
+services:
+  auth:
+    build: ./auth
+    environment:
+      JSON_CONFIG_PATH: /etc/oauth2_config.json
+    hostname: host.docker.internal
+    image: ghcr.io/bryant-finney/nginx-oauth/auth:${BRANCH_TAG:-scratch}
+    ports: ["8080"]
+    volumes: [./auth/oauth2_config.json:/etc/oauth2_config.json]
+
+  echo:
+    build: ./echo
+    image: ghcr.io/bryant-finney/nginx-oauth/echo:${BRANCH_TAG:-scratch}
+    ports: ["8080"]
+
+  nginx:
+    build: ./nginx
+    depends_on: [auth, echo]
+    image: ghcr.io/bryant-finney/nginx-oauth/nginx:${BRANCH_TAG:-scratch}
+    ports:
+      - "8080:80"
+      - "8443:443"
+    volumes:
+      - ./nginx/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/etc/nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/usr/share/nginx:/usr/share/nginx

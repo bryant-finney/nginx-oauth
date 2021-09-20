@@ -1,0 +1,4 @@
+# https://github.com/navikt/mock-oauth2-server/pkgs/container/mock-oauth2-server#docker-compose
+# the following line needs to be appended to `/etc/hosts`
+
+127.0.0.1	host.docker.internal
